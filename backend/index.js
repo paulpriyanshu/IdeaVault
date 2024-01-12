@@ -5,6 +5,10 @@ const mongoose=require('mongoose')
 const {notesdb}=require('./model/noteModel')
 const cors=require('cors')
 //const bodyparser=require('body-parser')
+//const {nanoid} = require("nanoid")
+//const id=nanoid()
+const {v4:uuidv4} = require("uuid")
+
 app.use(cors())
 app.use(express.json())
 mongoose.connect('mongodb+srv://priyanshupaul003:oAsGAjErBlExDHoa@cluster0.42q18en.mongodb.net/Editor?retryWrites=true&w=majority',{
@@ -17,12 +21,14 @@ mongoose.connect('mongodb+srv://priyanshupaul003:oAsGAjErBlExDHoa@cluster0.42q18
 //     await notesdb.find({})
 // })
 app.post('/notes',async(req,res)=>{
-    await notesdb.create({
+   const newnotes =  await notesdb.create({
+        id: parseInt(uuidv4()),
         title: req.body.title,
         description : req.body.description
     })
     res.json({
-        msg:"Changes Saved"
+       
+        data: newnotes.id
     })
 })
 app.patch('/notes/update/:id',async(req,res)=>{
@@ -34,8 +40,9 @@ app.patch('/notes/update/:id',async(req,res)=>{
     //     new: true,
     //     validators: true
     // }) 
-
-    await notesdb.findByIdAndUpdate(req.params.id,req.body,{
+    const filter = {id:req.params.id}
+    const update = {description : req.body.description}
+    await notesdb.findOneAndUpdate(filter,update,{
         new: true,
         validators: true
     })

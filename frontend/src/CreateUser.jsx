@@ -23,7 +23,7 @@ function CreateUser() {
       window.open('https://github.com/paulpriyanshu','_blank')
     }
     const handlesavenote=async()=>{
-         await fetch("http://localhost:5001/notes",{
+           await fetch("http://localhost:5001/notes",{
           method:"POST",
           body: JSON.stringify({
             title:user,
@@ -33,17 +33,31 @@ function CreateUser() {
             "Content-type":"application/json"
           }
         }) 
-        .then(async function(res) {
-          const data = await res.json();
-          newid=data._id.toHexString()
-          setobjectid(newid)
+        // .then(async function(res) {
+        //   const data = await res.json();
+        //   const newid=data.id
+        //   console.log(newid)
+        //   setobjectid(newid)
           
         
-          alert("Data added");
+        //   alert("Data added");
         
+        // })
+        
+         .then(async function(response){
+          const data = await response.json();
+          const id = data.data;
+          console.log(id)
+          setobjectid(id)
         })
-
     }
+    // const handlenotes=async()=>{
+    //   let response = await fetch("http://localhost:5001/notes")
+    //   const data = await response.json()
+    //   console.log(data.id)
+    //   setobjectid(data.id)
+      
+    // }
     const updatenotes=async()=>{
       await fetch(`http://localhost:5001/notes/update/${objectid}`,{
         method:"PATCH",
@@ -62,14 +76,17 @@ function CreateUser() {
       
       })
     }
+
   
   return (
     <>
     <div className='flex h-screen'>
     <div className="w-1/2 p-4 bg-gray-200">
-      <span><button style={{width:150,height:50,marginLeft:450,marginTop:20}} onClick={handlesavenote} className='border border-slate-500 rounded-full hover:bg-slate-300'>Save</button></span>
-      <h3 style={{marginLeft:60,marginTop:50}}  className="font-mono text-xl">Title</h3>
-      <span><button onClick={updatenotes}>update</button></span>
+      <span><button style={{width:150,height:50,marginLeft:450,marginTop:20}} onClick={handlesavenote} className='border border-slate-500 rounded-full hover:bg-slate-300'>Save</button>
+      <button style={{width:150,height:50,marginLeft:450,marginTop:20}} className='border border-slate-500 rounded-full hover:bg-slate-300' onClick={updatenotes}>update</button>
+      </span>
+      <h3 style={{marginLeft:60}}  className="font-mono text-xl">Title</h3>
+      
       <span><div><input size={10} type='text' style={{margin:50,width:250,height:100}}  className='border border-slate-500 rounded-xl py-2 px-5' value={user} placeholder='name' onChange={adduser}/></div></span>
         
         <h3 style={{marginLeft:60,paddingBottom:10}}  className="font-mono text-xl">Description</h3>
@@ -77,6 +94,7 @@ function CreateUser() {
        <span>
         <img src={gitlogo} alt="Github" height={50} width={50} onClick={handleimageclick} className='cursor-pointer py-5 ml-5 mt-4'/></span>
     </div>
+    
      <Card props={props}/>
     </div>
      </>

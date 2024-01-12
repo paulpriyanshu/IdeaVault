@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 
+
+
+
+
+
+
 export default function Auth() {
+
+  const [email,setemail]=useState("")
+  const [password,setpassword]=useState("")
+
+  
+  
+
 
   return (
     <section className="h-screen">
@@ -27,6 +40,8 @@ export default function Auth() {
                 type="email"
                 placeholder="Email address"
                 size="lg"
+                value={email}
+                onChange={(e)=>setemail(e.target.value)}
                 className="mb-4 border border-grey-300 px-2 py-2 rounded-lg"
                 ></TEInput>
 
@@ -35,6 +50,8 @@ export default function Auth() {
                 type="password"
                 placeholder="Password"
                 className="mb-4 border border-grey-300 px-2 py-2 rounded-lg"
+                value={password}
+                onChange={setpassword}
                 size="lg"
                 ></TEInput>
 
@@ -71,15 +88,10 @@ export default function Auth() {
                 </TERipple>
 
                 {/* <!-- Register link --> */}
-                <p className="mb-0 mt-2 pt-1 text-sm font-semibold">
+                <button className="mb-0 ml-4 mt-2 pt-1 text-sm font-semibold" onClick={Signup}>
                   Don't have an account?{" "}
-                  <a
-                    href="#!"
-                    className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                  >
-                    Register
-                  </a>
-                </p>
+                  Register
+                 </button>
               </div>
             </form>
           </div>
