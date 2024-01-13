@@ -3,6 +3,7 @@ const app= express()
 const port=5001;
 const mongoose=require('mongoose')
 const {notesdb}=require('./model/noteModel')
+const Users=require('./model/UsersModel')
 const cors=require('cors')
 //const bodyparser=require('body-parser')
 //const {nanoid} = require("nanoid")
@@ -20,6 +21,21 @@ mongoose.connect('mongodb+srv://priyanshupaul003:oAsGAjErBlExDHoa@cluster0.42q18
 // app.get('./notes/saved',async(req,res)=>{
 //     await notesdb.find({})
 // })
+app.post('/signup',async(req,res)=>{
+    const newUser = await Users.create({
+        Name:req.body.Name,
+        email:req.body.Email,
+        password:req.body.Password,
+        Confpassword:req.body.ConfPassword
+    })
+    res.json({
+        data: `Welcome,${newUser.Name}`
+    })
+
+})
+
+
+
 app.post('/notes',async(req,res)=>{
    const newnotes =  await notesdb.create({
         id: parseInt(uuidv4()),

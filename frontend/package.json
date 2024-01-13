@@ -13,8 +13,10 @@
     "mermaid": "^10.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.1",
-    "tw-elements-react": "^1.0.0-alpha2"
+    "react-draggable": "^4.4.6",
+    "react-router-dom": "^6.21.2",
+    "tw-elements-react": "^1.0.0-alpha2",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

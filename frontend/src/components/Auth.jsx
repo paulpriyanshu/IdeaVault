@@ -1,11 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
-
-
-
-
-
-
 
 export default function Auth() {
 
@@ -88,10 +83,10 @@ export default function Auth() {
                 </TERipple>
 
                 {/* <!-- Register link --> */}
-                <button className="mb-0 ml-4 mt-2 pt-1 text-sm font-semibold" onClick={Signup}>
+                <Link to="/signup" className="mb-0 ml-4 mt-2 pt-1 text-sm font-semibold">
                   Don't have an account?{" "}
                   Register
-                 </button>
+                 </Link>
               </div>
             </form>
           </div>

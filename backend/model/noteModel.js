@@ -4,6 +4,7 @@ const { string } = require('zod')
 
 
 const noteschema= new mongoose.Schema({
+    user:String,
     id:Number,
     title:String,
     description:String
