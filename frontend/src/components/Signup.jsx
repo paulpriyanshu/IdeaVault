@@ -1,31 +1,66 @@
 import React, { useState } from 'react'
 import { TEInput,TERipple } from 'tw-elements-react'
 import {useNavigate} from 'react-router-dom'
+//import {setobjectid} from '../CreateUser'
 function Signup() {
-    const [email,setemail]=useState("")
-    const [password,setpassword]=useState("")
-    const [name,setname]=useState("")
-    const [Confpassword,SetConfpassword]=useState("")
+  const [email,setemail]=useState("")
+  const [password,setpassword]=useState("")
+  const [name,setname]=useState("")
+  const [Confpassword,setConfpassword]=useState("")
+  const [notesid,setnotesid]=useState("")
+    
     const navigateTo=useNavigate()
 
+  //   let signup={
+  //     name:name,
+  //     email:email,
+  //     password:password,
+  //     Confpassword:Confpassword
+  // }
     const handlesignup=async(e)=>{
-        e.preventDefault()
-        await fetch("http://localhost:5001/signup",{
-            method:"POST",
-            body: JSON.stringify({
-              Name:name,
-              Email:email,
-              Password:password,
-              Confpassword:Confpassword
-            }),
-            headers:{
-              "Content-type":"application/json"
-            }
-          }).then(async(res)=>{
-            const data=await res.json()
-            navigateTo('/create')
-          })
-    }
+      e.preventDefault()
+      await fetch("http://localhost:5001/signup",{
+          method:"POST",
+          body: JSON.stringify({
+            Name:name,
+            Email:email,
+            Password:password,
+            ConfPassword:Confpassword
+          }),
+          headers:{
+            "Content-type":"application/json"
+          }
+        }).then(async(response)=>{
+          const data = await response.json();
+          const id = data.id;
+          console.log(id)
+          
+          navigateTo(`/create/`)
+
+        })
+        
+
+  }
+  // const updateemptynotes=async()=>{
+  //   await fetch(`http://localhost:5001/notes/update/${objectid}`,{
+  //     method:"PATCH",
+  //     body: JSON.stringify({
+  //       title:user,
+  //       description:des
+  //     }),
+  //     headers:{
+  //       "Content-type":"application/json"
+  //     }
+  //   }) 
+  //   .then(async function(res) {
+  //     const json = await res.json();
+  //     console.log(json)
+  //     alert("Data updated");
+    
+  //   })
+  // }
+ 
+
 
   return (
     <section className="h-screen">
@@ -78,7 +113,7 @@ function Signup() {
               placeholder="Confirm Password"
               className="mb-4 border border-grey-300 px-2 py-2 rounded-lg"
               value={Confpassword}
-              onChange={(e)=>{SetConfpassword(e.target.value)}}
+              onChange={(e)=>{setConfpassword(e.target.value)}}
               size="lg"
               ></TEInput>
 
