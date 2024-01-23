@@ -4,7 +4,7 @@ import Card from './Card'
 import gitlogo from './components/img/Gitnewlogo.png'
 import axios from 'axios'
 import { string } from 'zod'
-import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from 'recoil'
 import { CardState } from './components/CardState'
 //import {setnotesid} from './components/Signup'
 function CreateUser() {
@@ -12,19 +12,12 @@ function CreateUser() {
     const [user,setuser]=useState("")
     const [des,setdes]=useState("")
     const [objectid,setobjectid]=useState(null)
-    const [card,setCard]=useRecoilState(CardState)
-
-    const editdraft=(e)=>{
-      setdes(e.target.value)
-      setCard((prevdata)=> prevdata.description+des)
-    }
     // if(CardState){
     //   setuser(useSetRecoilState(CardState))
-
+    
     // }
     const adduser=(e)=>{
       setuser(e.target.value)
-      setCard((prevdata)=> prevdata.description+des)
     }
     const adddes=(e)=>{
         setdes(e.target.value)
@@ -97,10 +90,10 @@ function CreateUser() {
       </span>
       <h3 style={{marginLeft:60}}  className="font-mono text-xl">Title</h3>
       
-      <span><div><input size={10} type='text' style={{margin:50,width:250,height:100}}  className='border border-slate-500 rounded-xl py-2 px-5' value={card.title} placeholder='name' onChange={adduser}/></div></span>
+      <span><div><input size={10} type='text' style={{margin:50,width:250,height:100}}  className='border border-slate-500 rounded-xl py-2 px-5' value={user} placeholder='name' onChange={adduser}/></div></span>
 
         <h3 style={{marginLeft:60,paddingBottom:10}}  className="font-mono text-xl">Description</h3>
-       <span><textarea  style={{marginLeft:50,width:500,height:400}} className='border border-slate-600 rounded-xl py-10 px-5'  value={card.description} placeholder="Type here..." onChange={editdraft}/></span>
+       <span><textarea  style={{marginLeft:50,width:500,height:400}} className='border border-slate-600 rounded-xl py-10 px-5'  value={des} placeholder="Type here..." onChange={adddes}/></span>
        <span>
         <img src={gitlogo} alt="Github" height={50} width={50} onClick={handleimageclick} className='cursor-pointer py-5 ml-5 mt-4'/></span>
     </div>

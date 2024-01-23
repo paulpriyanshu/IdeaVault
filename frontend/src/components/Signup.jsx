@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { TEInput,TERipple } from 'tw-elements-react'
 import {useNavigate} from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+//import { userState } from './UserState'
 //import {setobjectid} from '../CreateUser'
 function Signup() {
   const [email,setemail]=useState("")
@@ -8,7 +10,7 @@ function Signup() {
   const [name,setname]=useState("")
   const [Confpassword,setConfpassword]=useState("")
   const [notesid,setnotesid]=useState("")
-    
+  
     const navigateTo=useNavigate()
 
   //   let signup={

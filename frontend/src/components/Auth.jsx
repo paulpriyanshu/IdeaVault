@@ -1,15 +1,49 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
+import Card from "../Card";
+import { useRecoilState } from "recoil";
+import { CardState } from "./CardState";
+
+let datas=[]
+
+
 
 export default function Auth() {
 
   const [email,setemail]=useState("")
   const [password,setpassword]=useState("")
-  const handlelogin=()=>{
+  const navigateTo=useNavigate()
+  const [card,setCard]=useRecoilState(CardState)
+
+ 
+
+  const handlelogin=async(e)=>{
     e.preventDefault()
-    
-  }
+    await fetch("http://localhost:5001/login",{
+    method:"POST",
+    body:JSON.stringify({
+      Email:email,
+      Password:password
+    }),
+    headers:{
+      "Content-type":"application/json"
+    }
+}).then(async(response)=>{
+  const data=await response.json()
+    let userdata={title: data.data.title,
+      description: data.data.description}
+      datas.push(userdata)
+      const latest=datas[datas.length-1]
+      setCard(latest)
+      console.log(card)
+      datas.splice(0,datas.length)
+  })
+  navigateTo('/create/')
+
+}
+
+
 
 return (
     <section className="h-screen">
@@ -46,7 +80,7 @@ return (
                 placeholder="Password"
                 className="mb-4 border border-grey-300 px-2 py-2 rounded-lg"
                 value={password}
-                onChange={setpassword}
+                onChange={(e)=>setpassword(e.target.value)}
                 size="lg"
                 ></TEInput>
 
@@ -88,6 +122,7 @@ return (
                   Don't have an account?{" "}
                   Register
                  </Link>
+                 
               </div>
             </form>
           </div>

@@ -6,6 +6,7 @@ import CreateUser from './CreateUser.jsx'
 import {RouterProvider,createBrowserRouter} from 'react-router-dom'
 import Auth from './components/Auth.jsx'
 import Signup from './components/Signup.jsx'
+import { RecoilRoot } from 'recoil'
 const router=createBrowserRouter([
   {
     path:'/',
@@ -24,6 +25,8 @@ const router=createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <RecoilRoot>
     <RouterProvider router={router}/>
+    </RecoilRoot>
   </React.StrictMode>,
 )
