@@ -4,12 +4,34 @@ const Users=require('./UsersModel')
 
 
 const noteschema= new mongoose.Schema({
-    title:String,
-    description:String,
-  
+    title:{
+        type:String,
+    },
+    description:{
+        type:String,
+    
+    },
+    owner:{
+        type:mongoose.Schema.ObjectId,
+        ref:'Users'
+    }
+    
    
 
+},{
+    toJSON:{virtuals:true},
+    toObject:{virtuals:true},
 })
+
+noteschema.pre(/^find/,function(next) {
+    this.populate({
+      path: 'owner',
+      select:'email'
+    })
+    next()
+  })
+
+
 
 // noteschema.pre('save',async(next)=>{
 //     const elementspromises=this.elements.map(async id=>await Users.findById(id))

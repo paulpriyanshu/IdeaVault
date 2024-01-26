@@ -23,8 +23,8 @@ export default function Auth() {
     await fetch("http://localhost:5001/login",{
     method:"POST",
     body:JSON.stringify({
-      Email:email,
-      Password:password
+      email:email,
+      password:password
     }),
     headers:{
       "Content-type":"application/json"

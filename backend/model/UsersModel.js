@@ -9,8 +9,7 @@ const userschema =new  mongoose.Schema({
         type:String,
         required:true
     },
-   
-   email:{
+    email:{
         type:String,
         required:true,
         validate:[validator.isEmail,'email required'],
@@ -30,18 +29,10 @@ const userschema =new  mongoose.Schema({
             },
             message:"passwords are not same"
         }
-   },
-   notes:{
+   }
+  
     
-        type: mongoose.Types.ObjectId,
-        ref:'Notes'
-    
-},
-},{
-    toJSON:{virtuals:true},
-    toObject:{virtuals:true},
-}
-  )
+})
 
 userschema.pre('save', async function(next){
     if(!this.isModified('password')) return next()
