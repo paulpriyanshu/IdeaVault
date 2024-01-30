@@ -6,13 +6,33 @@ import axios from 'axios'
 import { string } from 'zod'
 import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { CardState } from './components/CardState'
+import { useNavigate } from 'react-router-dom'
 //import {setnotesid} from './components/Signup'
 function CreateUser() {
 
     const [user,setuser]=useState("")
     const [des,setdes]=useState("")
+    const navigateTo=useNavigate()
     const [objectid,setobjectid]=useState(null)
     const [card,setCard]=useRecoilState(CardState)
+
+    useEffect(()=>{
+      const prevtitle=localStorage.getItem('title')
+      const prevdes=localStorage.getItem('des')
+      if(prevtitle){
+        setuser(prevtitle)
+        if(prevdes){
+          setdes(prevdes)
+        }
+      }
+      
+    },[])
+    useEffect(()=>{
+      localStorage.setItem('title',user)
+      localStorage.setItem('des',des)
+    },[user,des])
+   
+
 
     const editdraft=(e)=>{
       setdes(e.target.value)
@@ -58,14 +78,16 @@ function CreateUser() {
     }
     
     const updatenotes=async()=>{
-      await fetch(`http://localhost:5001/notes/update/`,{
+      await fetch(`http://localhost:5001/api/v1/auth/notes/update/`,{
         method:"PATCH",
         body: JSON.stringify({
           title:user,
           description:des
         }),
         headers:{
-          "Content-type":"application/json"
+          "Content-type":"application/json",
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        
         }
       }) 
       .then(async function(res) {
@@ -83,17 +105,36 @@ function CreateUser() {
           console.log(user)
 
        }
+    const getallnotes=async()=>{
+      //console.log(process.env)
+      let token=localStorage.getItem('token')
+      let notes=await fetch('http://localhost:5001/api/v1/auth/allnotes',{
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token")
+      }
+      })
+      const data=await notes.json()
+      console.log(data)
+
+      }
+    const handlelogout=async()=>{
+       localStorage.removeItem('token')
+       localStorage.removeItem('title')
+       localStorage.removeItem('des')
+      navigateTo('/')
+    }
     
   
   return (  
     <>
-    
-    <div className='flex h-screen'>
-    <div className="w-1/2 p-4 bg-gray-200">
+    <div className="flex justify-between">
+    <div className='flex flex-col min-h-screen w-1/2 p-4 bg-gray-200'>
+    <div className="min-h-screen">
+    <button style={{width:150,height:50,marginLeft:450,marginTop:20}} onClick={handlelogout} className='border border-slate-500 rounded-full hover:bg-slate-300'>Log out</button>
+      <button style={{width:150,height:50,marginLeft:450,marginTop:20}} onClick={getallnotes} className='border border-slate-500 rounded-full hover:bg-slate-300'>Allnotes</button>
   <span>
-      <button style={{width:150,height:50,marginLeft:450,marginTop:20}} onClick={getnotes} className='border border-slate-500 rounded-full hover:bg-slate-300'>Previous Note</button>
-      <button style={{width:150,height:50,marginLeft:450,marginTop:20}} onClick={handlesavenote} className='border border-slate-500 rounded-full hover:bg-slate-300'>Save</button>
-      <button style={{width:150,height:50,marginLeft:450,marginTop:20}} className='border border-slate-500 rounded-full hover:bg-slate-300' onClick={updatenotes}>update</button>
+   
+      <button style={{width:150,height:50,marginLeft:450,marginTop:20}} className='border border-slate-500 rounded-full hover:bg-slate-300' onClick={updatenotes}>Save</button>
       </span>
       <h3 style={{marginLeft:60}}  className="font-mono text-xl">Title</h3>
       
@@ -105,7 +146,13 @@ function CreateUser() {
         <img src={gitlogo} alt="Github" height={50} width={50} onClick={handleimageclick} className='cursor-pointer py-5 ml-5 mt-4'/></span>
     </div>
     
-     <Card props={props}/>
+     
+    </div>
+    <span><div className="absolute top-1/3 left-2/3">
+      <Card props={props}/>
+    </div>
+    </span>
+    
     </div>
     
      </>
