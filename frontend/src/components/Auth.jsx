@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Navigate, useFetcher, useNavigate } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
 import Card from "../Card";
 import { useRecoilState } from "recoil";
@@ -11,37 +11,75 @@ let datas=[]
 
 export default function Auth() {
 
-  const [email,setemail]=useState("")
-  const [password,setpassword]=useState("")
+  const [email,setemail]=useState(localStorage.getItem('email')|| null)
+  const [password,setpassword]=useState(localStorage.getItem('password') || null)
   const navigateTo=useNavigate()
   const [card,setCard]=useRecoilState(CardState)
-
+  const[mount,setmount]=useState(false)
+  
+  
+  useEffect(()=>{
+    localStorage.setItem('email',email);
+  },[email])
+  useEffect(()=>{
+    localStorage.setItem('password',password);
+  },[password])
+  // if(storedemail&&storedpw){
+  //   setemail(storedemail)
+  //   setpassword(storedpw)
+  // }
+  
+  //   useEffect(()=>{
+  //   if(!mount){
+  //     setmount(true)
+  //     return
+  //   }
+  // })
+  var handlelogin=async(e)=>{
+    
+  let token=localStorage.getItem("token")
+  console.log(token)
+  if(token){
+    navigateTo('/create/')
+  }else{
  
 
-  const handlelogin=async(e)=>{
-    e.preventDefault()
-    await fetch("http://localhost:5001/login",{
+  //let token=localStorage.getItem('token')
+  
+    await fetch("http://localhost:5001/api/v1/auth/login",{
     method:"POST",
     body:JSON.stringify({
       email:email,
       password:password
     }),
     headers:{
-      "Content-type":"application/json"
+      "Content-type":"application/json",
+      
     }
 }).then(async(response)=>{
   const data=await response.json()
+  
     let userdata={title: data.data.title,
       description: data.data.description}
       datas.push(userdata)
       const latest=datas[datas.length-1]
       setCard(latest)
+      console.log(userdata)
       console.log(card)
+      console.log(localStorage.setItem("title", data.data.title))
+      console.log(localStorage.setItem("des", data.data.description))
+      console.log(localStorage.setItem("token", data.data.token))
+      console.log(datas)
       datas.splice(0,datas.length)
   })
   navigateTo('/create/')
+}
 
 }
+// useEffect(()=>{
+//   handlelogin()
+// },[])
+
 
 
 

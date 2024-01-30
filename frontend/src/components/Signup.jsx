@@ -21,7 +21,7 @@ function Signup() {
   // }
     const handlesignup=async(e)=>{
       e.preventDefault()
-      await fetch("http://localhost:5001/signup",{
+      await fetch("http://localhost:5001/api/v1/auth/signup",{
           method:"POST",
           body: JSON.stringify({
             Name:name,
@@ -30,10 +30,16 @@ function Signup() {
             ConfPassword:Confpassword
           }),
           headers:{
-            "Content-type":"application/json"
-          }
+            "Content-type":"application/json",
+            
+          },
+          
         }).then(async(response)=>{
+          
+         
           const data = await response.json();
+          console.log(data)
+          localStorage.setItem("token", data.token)
           const id = data.id;
           console.log(id)
           

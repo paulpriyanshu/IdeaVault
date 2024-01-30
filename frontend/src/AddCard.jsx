@@ -1,9 +1,10 @@
 import React from 'react'
+import Draggable from 'react-draggable'
 
 function AddCard() {
   return (
     <>
-       <Draggable>
+    <Draggable>
     <div style={{margin:200,marginLeft:400,marginTop:340,width:650,height:400,overflowWrap: 'break-word', wordWrap: 'break-word'}} className="bg-yellow-100 rounded-xl shadow-md">
     <div><button  class="absolute top-3  text-3xl right-4 px-1  text-slate-300 rounded-full hover:text-slate-400 focus:outline-none focus:ring focus:border-blue-300">
     +
