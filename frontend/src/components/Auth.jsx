@@ -42,7 +42,7 @@ export default function Auth() {
   if(token){
     navigateTo('/create/')
   }else{
- 
+    
 
   //let token=localStorage.getItem('token')
   
@@ -71,8 +71,9 @@ export default function Auth() {
       console.log(localStorage.setItem("token", data.data.token))
       console.log(datas)
       datas.splice(0,datas.length)
+      navigateTo('/create/')
   })
-  navigateTo('/create/')
+  
 }
 
 }

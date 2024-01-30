@@ -7,6 +7,7 @@ import { string } from 'zod'
 import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { CardState } from './components/CardState'
 import { useNavigate } from 'react-router-dom'
+import AllCards from './AllCards'
 //import {setnotesid} from './components/Signup'
 function CreateUser() {
 
@@ -107,14 +108,16 @@ function CreateUser() {
        }
     const getallnotes=async()=>{
       //console.log(process.env)
-      let token=localStorage.getItem('token')
-      let notes=await fetch('http://localhost:5001/api/v1/auth/allnotes',{
-        headers: {
-          "Authorization": "Bearer " + localStorage.getItem("token")
-      }
-      })
-      const data=await notes.json()
-      console.log(data)
+      // let token=localStorage.getItem('token')
+      // let notes=await fetch('http://localhost:5001/api/v1/auth/allnotes',{
+      //   headers: {
+      //     "Authorization": "Bearer " + localStorage.getItem("token")
+      // }
+      // }).then(async(notes)=>{
+      //   const data=await notes.json()
+      //   console.log(data)
+      // })
+      navigateTo('/allnotes/')
 
       }
     const handlelogout=async()=>{
