@@ -76,7 +76,9 @@ function CreateUser() {
           console.log(id)
           setobjectid(id)
         })
+
     }
+   
     
     const updatenotes=async()=>{
       await fetch(`http://localhost:5001/api/v1/auth/notes/update/`,{
@@ -107,16 +109,6 @@ function CreateUser() {
 
        }
     const getallnotes=async()=>{
-      //console.log(process.env)
-      // let token=localStorage.getItem('token')
-      // let notes=await fetch('http://localhost:5001/api/v1/auth/allnotes',{
-      //   headers: {
-      //     "Authorization": "Bearer " + localStorage.getItem("token")
-      // }
-      // }).then(async(notes)=>{
-      //   const data=await notes.json()
-      //   console.log(data)
-      // })
       navigateTo('/allnotes/')
 
       }
@@ -126,19 +118,43 @@ function CreateUser() {
        localStorage.removeItem('des')
       navigateTo('/')
     }
-    
+    const newnote=async()=>{
+      const response=await fetch('http://localhost:5001/api/v1/auth/notes',{
+        method:'POST',
+        body: JSON.stringify({
+          title:user,
+          description:des
+        }),
+        headers:{
+          "Content-type":"application/json",
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        
+        }
+      }).then(async(res)=>{
+        let data=await res.json()
+        console.log(data)
+        alert('Data Saved')
+      })
+
+      
+
+
+    }
   
   return (  
     <>
     <div className="flex justify-between">
     <div className='flex flex-col min-h-screen w-1/2 p-4 bg-gray-200'>
     <div className="min-h-screen">
-    <button style={{width:150,height:50,marginLeft:450,marginTop:20}} onClick={handlelogout} className='border border-slate-500 rounded-full hover:bg-slate-300'>Log out</button>
-      <button style={{width:150,height:50,marginLeft:450,marginTop:20}} onClick={getallnotes} className='border border-slate-500 rounded-full hover:bg-slate-300'>Allnotes</button>
-  <span>
+    <div className="mb-10 mt-5">
+    <button style={{width:150,height:50, margin:10,marginLeft:50}} onClick={handlelogout} className='border border-slate-500 rounded-full hover:bg-slate-300'>Log out</button>
+      <button style={{width:150,height:50,margin:10}} onClick={getallnotes} className='border border-slate-500 rounded-full hover:bg-slate-300'>Allnotes</button>
+      <button style={{width:150,height:50,margin:10}} onClick={newnote} className='border border-slate-500 rounded-full hover:bg-slate-300'>New note</button>
+    <span>
    
-      <button style={{width:150,height:50,marginLeft:450,marginTop:20}} className='border border-slate-500 rounded-full hover:bg-slate-300' onClick={updatenotes}>Save</button>
+      <button style={{width:150,height:50,margin:10}} className='border border-slate-500 rounded-full hover:bg-slate-300' onClick={updatenotes}>Save</button>
       </span>
+      </div>
       <h3 style={{marginLeft:60}}  className="font-mono text-xl">Title</h3>
       
       <span><div><input size={10} type='text' style={{margin:50,width:250,height:100}}  className='border border-slate-500 rounded-xl py-2 px-5' value={card.title} placeholder='name' onChange={adduser}/></div></span>

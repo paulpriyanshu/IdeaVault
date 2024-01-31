@@ -17,7 +17,8 @@ export default function Auth() {
   const [card,setCard]=useRecoilState(CardState)
   const[mount,setmount]=useState(false)
   
-  
+  localStorage.setItem('email',email);
+  localStorage.setItem('password',password);
   useEffect(()=>{
     localStorage.setItem('email',email);
   },[email])
