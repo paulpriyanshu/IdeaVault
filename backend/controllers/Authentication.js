@@ -117,6 +117,7 @@ exports.login=async(req,res,next)=>{
         res.json({
             data:{
                 token,
+                id:loggedin._id,
                 title: Oneuser.title,
                 description: Oneuser.description
                 
@@ -131,32 +132,47 @@ exports.login=async(req,res,next)=>{
     next()
 }
 exports.notes=async(req,res)=>{
+    // var loggedin=await Users.findOne({email}).select('+password')
+    let token=req.headers.authorization.split(' ')[1]
+    console.log(token)
+    const decoded=jwt.verify(token,process.env.JWT_SECRET)
     const newnotes =  await notesdb.create({
         title:req.body.title,
         description:req.body.description,
-        owner:Owner
+        owner:decoded.id
     })
      res.json({
         newnotes
      })
  }
 exports.getallnotes=async(req,res)=>{
+    console.log(req.headers.authorization)
     
-    const allnotes=await notesdb.find({owner:Owner})
+    let token=req.headers.authorization.split(' ')[1]
+    let decoded=jwt.verify(token,process.env.JWT_SECRET)
+    console.log(decoded.id)
+    const allnotes=await notesdb.find({owner:decoded.id})
     if(!allnotes){
         res.json({
             msg: "no data"
         })
     }else{
+    //console.log(title,description)
+    const {title,description}=allnotes
+    let list=[1,2,3]
+    
     res.json({
         allnotes
     })
+
 }
 }
 exports.updatedata=async(req,res)=>{ 
   //console.log((Owner.toString()))
     let Owner
-    const Oneuser=await notesdb.findOne({owner:Owner})
+    let token=req.headers.authorization.split(' ')[1]
+    let decoded=jwt.verify(token,process.env.JWT_SECRET)
+    const Oneuser=await notesdb.findOne({owner:decoded.id})
    
     const filter = Oneuser._id
     const update = {

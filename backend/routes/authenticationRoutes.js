@@ -14,7 +14,7 @@ router
     .get(protect,getallnotes)
 router
     .route('/notes')
-    .post(notes)
+    .post(protect,notes)
 router
     .route('/notes/update/')
     .patch(updatedata)
