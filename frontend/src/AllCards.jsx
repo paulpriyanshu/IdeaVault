@@ -18,29 +18,9 @@ const [alldata,setalldata]=useState([])
           "Authorization": "Bearer " + localStorage.getItem("token")
       }
       }).then(async(notes)=>{
-
-        const data=await notes.json()
-        
-        //console.log(data)
-        
-        //console.log(Array.isArray())
-        //console.log(lis)
-        //setcontent(data)
-        //setCard(content)
-        //console.log(list)
-        setalldata(data.allnotes)
-        //console.log(data.allnotes)
-        // .map((item)=>setalldata(item.title ,item.description))
-
-        
-      
-      
-        
-
-        
-        //setCard((prev)=>prev.description+data.description)
-      
-   })}
+      const data=await notes.json()
+           setalldata(data.allnotes)
+          })}
     
      useEffect(()=>{
          allcarddata()

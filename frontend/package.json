@@ -10,11 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
     "mermaid": "^10.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",
     "react-router-dom": "^6.21.2",
+    "react-toastify": "^10.0.4",
     "recoil": "^0.7.7",
     "tw-elements-react": "^1.0.0-alpha2",
     "validator": "^13.11.0"

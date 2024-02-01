@@ -1,4 +1,6 @@
 import React, { useState,useEffect } from 'react'
+import { ToastContainer,toast,cssTransition } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 import Card from './Card'
 //import { text } from 'express'
 import gitlogo from './components/img/Gitnewlogo.png'
@@ -7,7 +9,9 @@ import { string } from 'zod'
 import { RecoilRoot, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { CardState } from './components/CardState'
 import { useNavigate } from 'react-router-dom'
+import Notify from './components/Notify'
 import AllCards from './AllCards'
+import { components } from 'react-select'
 //import {setnotesid} from './components/Signup'
 function CreateUser() {
 
@@ -16,7 +20,11 @@ function CreateUser() {
     const navigateTo=useNavigate()
     const [objectid,setobjectid]=useState(null)
     const [card,setCard]=useRecoilState(CardState)
-
+    const [showalert,setalert]=useState(false)
+    // const bounce = cssTransition({
+    //   enter: "animate__animated animate__bounceIn",
+    //   exit: "animate__animated animate__bounceOut",
+    // });
     useEffect(()=>{
       const prevtitle=localStorage.getItem('title')
       const prevdes=localStorage.getItem('des')
@@ -96,8 +104,10 @@ function CreateUser() {
       .then(async function(res) {
         const json = await res.json();
         console.log(json)
-        alert("Data updated");
-      
+        // alert("Data updated");
+        toast.success("Note Updated!",{
+          
+        });
       })
     }
     const getnotes=async()=>{
@@ -133,7 +143,12 @@ function CreateUser() {
       }).then(async(res)=>{
         let data=await res.json()
         console.log(data)
-        alert('Data Saved')
+        // setalert(true)
+        toast.success("Note Saved!",{
+          
+          
+        });
+        
       })
 
       
@@ -143,6 +158,7 @@ function CreateUser() {
   
   return (  
     <>
+    
     <div className="flex justify-between">
     <div className='flex flex-col min-h-screen w-1/2 p-4 bg-gray-200'>
     <div className="min-h-screen">
@@ -150,10 +166,12 @@ function CreateUser() {
     <button style={{width:150,height:50, margin:10,marginLeft:50}} onClick={handlelogout} className='border border-slate-500 rounded-full hover:bg-slate-300'>Log out</button>
       <button style={{width:150,height:50,margin:10}} onClick={getallnotes} className='border border-slate-500 rounded-full hover:bg-slate-300'>Allnotes</button>
       <button style={{width:150,height:50,margin:10}} onClick={newnote} className='border border-slate-500 rounded-full hover:bg-slate-300'>New note</button>
-    <span>
+      <span>
    
-      <button style={{width:150,height:50,margin:10}} className='border border-slate-500 rounded-full hover:bg-slate-300' onClick={updatenotes}>Save</button>
-      </span>
+   <button style={{width:150,height:50,margin:10}} className='border border-slate-500 rounded-full hover:bg-slate-300' onClick={updatenotes}>Save</button>
+   </span>
+      <span><ToastContainer /></span>
+   
       </div>
       <h3 style={{marginLeft:60}}  className="font-mono text-xl">Title</h3>
       
@@ -173,6 +191,7 @@ function CreateUser() {
     </span>
     
     </div>
+    <Notify show={showalert}/>
     
      </>
   )
