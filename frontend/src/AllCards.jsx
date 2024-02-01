@@ -18,29 +18,9 @@ const [alldata,setalldata]=useState([])
           "Authorization": "Bearer " + localStorage.getItem("token")
       }
       }).then(async(notes)=>{
-
-        const data=await notes.json()
-        
-        //console.log(data)
-        
-        //console.log(Array.isArray())
-        //console.log(lis)
-        //setcontent(data)
-        //setCard(content)
-        //console.log(list)
-        setalldata(data.allnotes)
-        //console.log(data.allnotes)
-        // .map((item)=>setalldata(item.title ,item.description))
-
-        
-      
-      
-        
-
-        
-        //setCard((prev)=>prev.description+data.description)
-      
-   })}
+      const data=await notes.json()
+           setalldata(data.allnotes)
+          })}
     
      useEffect(()=>{
          allcarddata()
@@ -49,11 +29,11 @@ const [alldata,setalldata]=useState([])
 
 
     return (
-    <div> 
+    <div className="flex flex-wrap mt-6 "> 
          {alldata.map((item) => (
-            <div key={item.id}>
-                <AddCard title={item.title} description={item.description} />
-                </div>
+            <span key={item.id} style={{overflowWrap: 'break-word', wordWrap: 'break-word'}} className='m-4  card-container q duration-50 ease-in-out   hover:scale-110 transition-transform duration-350'>
+                <AddCard title={item.title} description={item.description} onClick={()=>handleitemclick(item)} />
+                </span>
                 ))}
       
       

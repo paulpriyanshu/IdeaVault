@@ -17,6 +17,7 @@ export default function Auth() {
   const [card,setCard]=useRecoilState(CardState)
   const[mount,setmount]=useState(false)
   
+  
   localStorage.setItem('email',email);
   localStorage.setItem('password',password);
   useEffect(()=>{
@@ -40,12 +41,10 @@ export default function Auth() {
     
   let token=localStorage.getItem("token")
   console.log(token)
-  if(token){
-    navigateTo('/create/')
-  }else{
+  
     
 
-  //let token=localStorage.getItem('token')
+  
   
     await fetch("http://localhost:5001/api/v1/auth/login",{
     method:"POST",
@@ -75,7 +74,7 @@ export default function Auth() {
       navigateTo('/create/')
   })
   
-}
+
 
 }
 // useEffect(()=>{
