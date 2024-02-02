@@ -46,6 +46,7 @@ function CreateUser() {
     const editdraft=(e)=>{
       setdes(e.target.value)
       setCard((prevdata)=> prevdata.description+des)
+      localStorage.setItem('draft',des)
     }
     // if(CardState){
     //   setuser(useSetRecoilState(CardState))
@@ -54,6 +55,7 @@ function CreateUser() {
     const adduser=(e)=>{
       setuser(e.target.value)
       setCard((prevdata)=> prevdata.description+des)
+      localStorage.setItem('adduser',user)
     }
     const adddes=(e)=>{
         setdes(e.target.value)
@@ -175,10 +177,10 @@ function CreateUser() {
       </div>
       <h3 style={{marginLeft:60}}  className="font-mono text-xl">Title</h3>
       
-      <span><div><input size={10} type='text' style={{margin:50,width:250,height:100}}  className='border border-slate-500 rounded-xl py-2 px-5' value={card.title} placeholder='name' onChange={adduser}/></div></span>
+      <span><div><input size={10} type='text' style={{margin:50,width:250,height:100}}  className='border border-slate-500 rounded-xl py-2 px-5' value={user} placeholder='name' onChange={adduser}/></div></span>
 
         <h3 style={{marginLeft:60,paddingBottom:10}}  className="font-mono text-xl">Description</h3>
-       <span><textarea  style={{marginLeft:50,width:500,height:400}} className='border border-slate-600 rounded-xl py-10 px-5'  value={card.description} placeholder="Type here..." onChange={editdraft}/></span>
+       <span><textarea  style={{marginLeft:50,width:500,height:400}} className='border border-slate-600 rounded-xl py-10 px-5'  value={des} placeholder="Type here..." onChange={editdraft}/></span>
        <span>
         <img src={gitlogo} alt="Github" height={50} width={50} onClick={handleimageclick} className='cursor-pointer py-5 ml-5 mt-4'/></span>
     </div>
