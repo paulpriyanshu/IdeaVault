@@ -65,7 +65,7 @@ function Results({ data }) {
      {<span className="flex flex-wrap  mt-6 ">{ 
           data.map((item) => (
             <span key={item.id} style={{overflowWrap: 'break-word', wordWrap: 'break-word'}} className='m-4  card-container q duration-50 ease-in-out   hover:scale-110 transition-transform duration-350'>
-                <AddCard title={item.title} description={item.description} date={item.date} onClick={()=>handleitemclick(item)} />
+                <AddCard title={item.title} description={item.description} date={item.date}  />
                 </span>
                 ))}
                 </span>
