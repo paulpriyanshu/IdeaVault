@@ -146,10 +146,7 @@ function CreateUser() {
         let data=await res.json()
         console.log(data)
         // setalert(true)
-        toast.success("Note Saved!",{
-          
-          
-        });
+        toast.success("Note Saved!");
         
       })
 

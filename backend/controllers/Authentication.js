@@ -2,6 +2,7 @@ const Users=require('../model/UsersModel')
 const {notesdb}=require('../model/noteModel')
 const mongoose=require('mongoose')
 const jwt=require('jsonwebtoken')
+const emailValidator=require('email-validator')
 
 let Owner,Token
 const signintoken=(id)=>{
@@ -10,7 +11,11 @@ const signintoken=(id)=>{
 })
 }
 
-
+const catchAsync = fn =>{
+    return(req,res,next)=>{
+        fn(req,res,next).catch(next)
+    }
+}
 exports.protect= async(req,res,next)=>{
     let token
 
@@ -70,9 +75,10 @@ exports.signup=async(req,res)=>{
     //console.log(noteids[noteids.length-1])
     let token=signintoken(newUser._id)
     let refid=newUser._id
+    console.log(refid)
     const newnotes =  await notesdb.create({
-        title:"",
-        description:"",
+        title:"Add Title",
+        description:"Write Something...",
         owner:refid
     })
  
@@ -87,21 +93,28 @@ exports.signup=async(req,res)=>{
 
 }
 
-exports.login=async(req,res,next)=>{
+exports.login=catchAsync(async(req,res,next)=>{
     const email=req.body.email
     const password=req.body.password
-
+    const isValid = emailValidator.validate(email);
     var loggedin=await Users.findOne({email}).select('+password')
-    const correctuser=await loggedin.correctPassword(password,loggedin.password)
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+      }
+    if (isValid) {
+        const correctuser=await loggedin.correctPassword(password,loggedin.password)
     if(!loggedin||!correctuser){
         return ('incorrect username or password')
     }
-
+    
+   
     // res.json({
     //     msg:"success",
     //     data:{
     //         loggedin
     //     }
+    
+
     // })
     var token=signintoken(loggedin._id)
         let owner=loggedin._id  
@@ -127,18 +140,31 @@ exports.login=async(req,res,next)=>{
     Owner=owner
     Token=token
     console.log(Owner)
+      } else {
+        res.status(400).json(
+            { 
+                error: 'Invalid email or password' 
+        }
+        );
+      }
+    
+    
     //res.locals.user_ref=owner
    // console.log(res.locals.user_ref)
     next()
-}
+})
 exports.notes=async(req,res)=>{
     // var loggedin=await Users.findOne({email}).select('+password')
+    var currentdate=new Date()
+    // let Datenow=`${currentdate.getDate()},"/",${currentdate.getMonth()+1},"/",${currentdate.getFullYear()}`
+    
     let token=req.headers.authorization.split(' ')[1]
     console.log(token)
     const decoded=jwt.verify(token,process.env.JWT_SECRET)
     const newnotes =  await notesdb.create({
         title:req.body.title,
         description:req.body.description,
+        date:currentdate,
         owner:decoded.id
     })
      res.json({

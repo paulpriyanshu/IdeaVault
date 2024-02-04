@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, Navigate, useFetcher, useNavigate } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
 import Card from "../Card";
+import { ToastContainer,toast,cssTransition } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
 import { useRecoilState } from "recoil";
 import { CardState } from "./CardState";
 
@@ -38,15 +40,11 @@ export default function Auth() {
   //   }
   // })
   var handlelogin=async(e)=>{
-    
+ 
   let token=localStorage.getItem("token")
   console.log(token)
-  
-    
-
-  
-  
-    await fetch("http://localhost:5001/api/v1/auth/login",{
+  try{
+  const response=await fetch("http://localhost:5001/api/v1/auth/login",{
     method:"POST",
     body:JSON.stringify({
       email:email,
@@ -56,9 +54,16 @@ export default function Auth() {
       "Content-type":"application/json",
       
     }
-}).then(async(response)=>{
+})
+if (!response.ok) {
+  const errorData = await response.json();
+  toast.error(errorData.error); // Show toast error
+} else {
+    toast.success("logged in")
   const data=await response.json()
-  
+  console.log(data)
+  console.log(data.error)
+ 
     let userdata={title: data.data.title,
       description: data.data.description}
       datas.push(userdata)
@@ -72,11 +77,19 @@ export default function Auth() {
       console.log(datas)
       datas.splice(0,datas.length)
       navigateTo('/create/')
-  })
+    }
+   
+  }catch(error){
+      toast.error("internal")
+  }
+}
+    
   
 
 
-}
+
+
+
 // useEffect(()=>{
 //   handlelogin()
 // },[])
@@ -122,6 +135,7 @@ return (
                 onChange={(e)=>setpassword(e.target.value)}
                 size="lg"
                 ></TEInput>
+                 <span><ToastContainer /></span>
 
               <div className="mb-6 flex items-center justify-between">
                 {/* <!-- Remember me checkbox --> */}

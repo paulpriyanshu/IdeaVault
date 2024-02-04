@@ -10,6 +10,8 @@ const Users=require('./model/UsersModel')
 const cors=require('cors')
 const authrouter=require('./routes/authenticationRoutes')
 const notesrouter=require('./routes/notesroutes')
+const AppError = require('./utils/AppError')
+const globalerrorhandler=require('./controllers/ErrorController')
 //const bodyparser=require('body-parser')
 //const {nanoid} = require("nanoid")
 //const id=nanoid()
@@ -35,6 +37,11 @@ mongoose.connect('mongodb+srv://priyanshupaul003:oAsGAjErBlExDHoa@cluster0.42q18
 })
 app.use('/api/v1/auth/',authrouter)
 app.use('/api/v1/new/',notesrouter)
+app.all('*',(req,res,next)=>{
+    next(new AppError(`cannot find${req.originalUrl} !`,404))
+
+    })
+app.use(globalerrorhandler)
 // app.get('./notes/saved',async(req,res)=>{
 //     await notesdb.find({})
 

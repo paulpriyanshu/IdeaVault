@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Draggable from 'react-draggable'
 import reactSelect from 'react-select';
 
-function AddCard({title,description}) {
+function AddCard({title,description,date}) {
   const [isSelected,setSelected]=useState(false)
   const [isEnlarged, setIsEnlarged] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
@@ -25,11 +25,12 @@ function AddCard({title,description}) {
     +
     </button></div>
     <h1 className='px-10 py-5 text-3xl text-black-400 font-semibold'>{title}</h1>
-    <h2 className='px-10 text-black-900 max-w-400  whitespace-pre-wrap' style={{overflowWrap: 'break-word', wordWrap: 'break-word' }}>
+    <h2 className='px-10 text-black-900 text-lg max-w-400  whitespace-pre-wrap' style={{overflowWrap: 'break-word', wordWrap: 'break-word' }}>
           <p className="px-2 py-1">
             {description}
             </p>
         </h2>
+      <h5 className='absolute bottom-2 right-4 text-sm text-slate-400 font-light'>{date}</h5>
       </div>
       
       

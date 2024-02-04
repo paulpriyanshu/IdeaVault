@@ -6,15 +6,21 @@ const Users=require('./UsersModel')
 const noteschema= new mongoose.Schema({
     title:{
         type:String,
+        
     },
     description:{
         type:String,
     
-    },
+    }, 
+    date: {
+        type: Date,
+        default: Date.now,
+      },
     owner:{
         type:mongoose.Schema.ObjectId,
         ref:'Users'
-    }
+    },
+   
     
    
 
