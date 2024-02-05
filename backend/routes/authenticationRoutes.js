@@ -1,5 +1,5 @@
 const express=require('express')
-const { login,signup, updatedata,notes, getallnotes, protect } = require('../controllers/Authentication')
+const { login,signup, updatedata,notes, getallnotes, protect,deletenotes } = require('../controllers/Authentication')
 const router=express.Router()
 
 router 
@@ -18,5 +18,8 @@ router
 router
     .route('/notes/update/')
     .patch(updatedata)
+router
+    .route('/notes/delete/:id')
+    .delete(protect,deletenotes)
 
 module.exports=router

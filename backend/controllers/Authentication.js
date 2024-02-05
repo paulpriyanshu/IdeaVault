@@ -184,10 +184,7 @@ exports.getallnotes=async(req,res)=>{
         })
     }else{
     //console.log(title,description)
-    const {title,description}=allnotes
-    let list=[1,2,3]
-    
-    res.json({
+   res.json({
         allnotes
     })
 
@@ -214,7 +211,26 @@ exports.updatedata=async(req,res)=>{
     res.status(200).json({
         msg: "updated"
     })
+}
+exports.deletenotes = async(req, res) => {
+    // let token=req.headers.authorization.split(' ')[1]
+    // let decoded=jwt.verify(token,process.env.JWT_SECRET)
+    // const Oneuser=await notesdb.deleteOne({owner:decoded._id})
+    //let object_id=localStorage.getItem('object_id')
+    //object_id=JSON.stringify(object_id)
+    let object_id=req.params.id
+    console.log(object_id)
+    const allnotes=await notesdb.deleteOne({_id:object_id})
+   
+   
+    //console.log(title,description)
+    res.json({
+            allnotes
+        })
 
+    
+
+        
    
 }
 

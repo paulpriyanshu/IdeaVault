@@ -5,6 +5,7 @@ import Card from './Card'
 import BubbleLoader from './components/BubbleLoader'
 import AddCard from './AddCard'
 import SearchBar from './components/SearchBar'
+//import { HandymanOutlined } from '@mui/icons-material'
 
 function AllCards() {
    //const queryValues = useRecoilValue(queryState)
@@ -33,8 +34,10 @@ const [loading, setLoading] = useState(true);
           //   }, 3000); // Set loading to false after 3 seconds
           // }, []);
     
+         
      useEffect(()=>{
          allcarddata()
+         
         //  setTimeout(()=>{
         //   setLoading(false)
         //  },2000)
@@ -54,9 +57,35 @@ const [loading, setLoading] = useState(true);
   
   
 }
+
 function Results({ data }) {
+  const [objid,setobjid]=useState("")
+  const [isGlowing, setIsGlowing] = useState(false);
+  const handleobjid = ()=>{
+    localStorage.setItem("object_id",objid)
+  
+    
+  }
+  useEffect(()=>{
+    handleobjid()
+  },[objid,setobjid])
+  const handleClickOutside = (event) => {
+    if (
+      !event.target.closest('.card-container') &&
+      !event.target.closest('.search-bar')
+    ) {
+      setobjid('');
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   return (
-    <div>
+    <div className='min-h-screen w-full p-4 bg-gray-200'>
 
 <div className="flex justify-end m-10">
       <SearchBar/>
@@ -64,8 +93,9 @@ function Results({ data }) {
       
      {<span className="flex flex-wrap  mt-6 ">{ 
           data.map((item) => (
-            <span key={item.id} style={{overflowWrap: 'break-word', wordWrap: 'break-word'}} className='m-4  card-container q duration-50 ease-in-out   hover:scale-110 transition-transform duration-350'>
+            <span key={item.id} style={{overflowWrap: 'break-word', wordWrap: 'break-word'}} onClick={()=>setobjid(item.id)} className={`m-4  card-container q duration-50 ease-in-out   hover:scale-110 transition-transform duration-350 `} >
                 <AddCard title={item.title} description={item.description} date={item.date}  />
+                
                 </span>
                 ))}
                 </span>
