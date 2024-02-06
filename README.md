@@ -1,4 +1,4 @@
-**The Card application is a note-taking application that allows users to create, edit, and save notes.** 
+**The IdeaVault application is a note-taking application that allows users to create, edit, and save notes.** 
 
 **The application is built with React and Redux, and uses the Recoil state management library.** 
 
