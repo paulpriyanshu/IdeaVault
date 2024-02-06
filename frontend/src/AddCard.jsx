@@ -3,12 +3,16 @@ import Draggable from 'react-draggable'
 import reactSelect from 'react-select';
 import  IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import { useNavigate } from'react-router-dom'
 function AddCard({title,description,date}) {
   const [isSelected,setSelected]=useState(false)
   const [isEnlarged, setIsEnlarged] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   const [isGlowing, setIsGlowing] = useState(false);
   const [refresh, setRefresh] = useState(false);
+ const navigateTo=useNavigate()
 
   const handleClick = () => {
     
@@ -48,7 +52,10 @@ function AddCard({title,description,date}) {
 
       }
       
-
+      function  handleedit(){
+        navigateTo('/create')
+        
+      }
 
   
   
@@ -58,15 +65,25 @@ function AddCard({title,description,date}) {
       
        
       <div style={{width:isEnlarged?800:450,height:isEnlarged?600:340,overflowWrap: 'break-word', wordWrap: 'break-word'}} onClick={handleClick} className={`todo-container bg-yellow-100 rounded-xl shadow-md overflow-auto  cursor-pointer ${
-        isGlowing ? "shadow-2xl sh shadow-yellow-300 q duration-500 ease-in-out" : ''
+        isGlowing ? "shadow-3xl sh shadow-yellow-300 q duration-500 ease-in-out" : ''
       }`}
         >
-      
-         <div className="absolute top-5 right-6 " onClick={handledelete} >
-         <IconButton aria-label="delete">
-              <DeleteIcon/>
-            </IconButton>
+     
+      <div className="absolute top-5 right-6 " onClick={handledelete} >
+        
+        <IconButton aria-label="delete">
+             <ClearOutlinedIcon/>
+           </IconButton>
+        </div>
+        <div className='absolute top-5 left-6' onClick={handleedit}>
+         <IconButton aria-label="edit">
+             <EditIcon/>
+           </IconButton>
+        
          </div>
+
+      
+         
          
         
           
