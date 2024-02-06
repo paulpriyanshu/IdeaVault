@@ -1,9 +1,9 @@
-**The Card application is a note-taking application that allows users to create, edit, and save notes. 
+**The Card application is a note-taking application that allows users to create, edit, and save notes.** 
 
 **The application is built with React and Redux, and uses the Recoil state management library.** 
 
 
-**The application has two main components: 
+**The application has two main components:**
 
 | **FRONTEND** | **BACKEND** |
 | ---- | ---- |
