@@ -60,10 +60,25 @@ function CreateUser() {
     const adddes=(e)=>{
         setdes(e.target.value)
     }
-    let props = {
+    var props = {
       title:user,
       description:des
     }
+    let edit_title=localStorage.getItem("edit-title")
+    let edit_description=localStorage.getItem("edit-description")
+    
+    //console.log(edit_title,edit_description)
+    if(edit_description||edit_title){
+      localStorage.removeItem("title")
+      localStorage.removeItem("des")
+     var props={
+        title:edit_title,
+        description:edit_description
+      }
+     
+      console.log("hello")
+    }
+    console.log(props);
  
     const handleimageclick=()=>{
       window.open('https://github.com/paulpriyanshu','_blank')
@@ -128,6 +143,10 @@ function CreateUser() {
        localStorage.removeItem('token')
        localStorage.removeItem('title')
        localStorage.removeItem('des')
+       localStorage.removeItem('edit-title')
+       localStorage.removeItem('edit-description')
+      
+
       navigateTo('/')
     }
     const newnote=async()=>{
@@ -150,10 +169,11 @@ function CreateUser() {
         
       })
 
-      
+     
 
 
     }
+
   
   return (  
     <>
@@ -185,7 +205,10 @@ function CreateUser() {
      
     </div>
     <span><div className="absolute top-1/3 left-2/3">
+    {console.log(props)}
       <Card props={props}/>
+      
+      
     </div>
     </span>
     

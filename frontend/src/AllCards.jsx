@@ -42,8 +42,8 @@ const [loading, setLoading] = useState(true);
         //   setLoading(false)
         //  },2000)
      },[])
-     console.log(alldata)
-     console.log(alldata[2])
+     //console.log(alldata)
+     //console.log(alldata[2])
      //const filteredData = queryValues ? alldata.filter((item) => item.title.includes(queryValues)) : alldata;
 
 

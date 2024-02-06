@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import { useNavigate } from'react-router-dom'
+import './components/editicon.css'
 function AddCard({title,description,date}) {
   const [isSelected,setSelected]=useState(false)
   const [isEnlarged, setIsEnlarged] = useState(false);
@@ -15,7 +16,8 @@ function AddCard({title,description,date}) {
  const navigateTo=useNavigate()
 
   const handleClick = () => {
-    
+    localStorage.setItem("edit-title",title)
+    localStorage.setItem("edit-description",description)
     setIsGlowing(true);
     setTimeout(() => {
       setIsGlowing(false);
@@ -39,11 +41,7 @@ function AddCard({title,description,date}) {
         "Content-type":"application/json",
         "Authorization": "Bearer " + localStorage.getItem("token")
       }
-
-        }
-
-
-        ).then(()=>{
+  }).then(()=>{
           handlerefresh()
           window.location.reload()
 
@@ -53,6 +51,7 @@ function AddCard({title,description,date}) {
       }
       
       function  handleedit(){
+       
         navigateTo('/create')
         
       }
@@ -68,31 +67,15 @@ function AddCard({title,description,date}) {
         isGlowing ? "shadow-3xl sh shadow-yellow-300 q duration-500 ease-in-out" : ''
       }`}
         >
-     
+   
       <div className="absolute top-5 right-6 " onClick={handledelete} >
         
         <IconButton aria-label="delete">
              <ClearOutlinedIcon/>
            </IconButton>
         </div>
-        <div className='absolute top-5 left-6' onClick={handleedit}>
-         <IconButton aria-label="edit">
-             <EditIcon/>
-           </IconButton>
-        
-         </div>
-
-      
-         
-         
-        
-          
-          {/* <button  className="absolute top-3  text-3xl right-4 px-1  text-slate-300 rounded-full hover:text-slate-400 focus:outline-none 
-     " onClick={AddCard}>
-    +
-    </button>
-     */}
-    <div className="absolute top-7">
+       
+        <div className="absolute top-7">
     <h1 className='px-10 py-5 text-3xl text-black-400 font-semibold'>{title}</h1>
     <h2 className='px-10 text-black-900 text-lg max-w-400  whitespace-pre-wrap' style={{overflowWrap: 'break-word', wordWrap: 'break-word' }}>
           <p className="px-2 py-1">
@@ -101,8 +84,15 @@ function AddCard({title,description,date}) {
         </h2>
     </div>
     
-    
+   
       <h5 className='absolute bottom-2 right-4 text-sm text-slate-400 font-light'>{date}</h5>
+      
+      <div className='edit-icon absolute top-5 right-14' onClick={handleedit}>
+         <IconButton aria-label="Edit">
+             <EditIcon/>
+           </IconButton>
+        
+         </div>
       </div>
       
       

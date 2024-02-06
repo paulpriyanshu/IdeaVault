@@ -21,6 +21,9 @@ function Signup() {
   // }
     const handlesignup=async(e)=>{
       e.preventDefault()
+      localStorage.removeItem('email')
+      localStorage.removeItem('title')
+      localStorage.removeItem('des')
       await fetch("http://localhost:5001/api/v1/auth/signup",{
           method:"POST",
           body: JSON.stringify({

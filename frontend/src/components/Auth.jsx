@@ -61,20 +61,20 @@ if (!response.ok) {
 } else {
     toast.success("logged in")
   const data=await response.json()
-  console.log(data)
-  console.log(data.error)
+  //console.log(data)
+  //console.log(data.error)
  
     let userdata={title: data.data.title,
       description: data.data.description}
       datas.push(userdata)
       const latest=datas[datas.length-1]
       setCard(latest)
-      console.log(userdata)
-      console.log(card)
-      console.log(localStorage.setItem("title", data.data.title))
-      console.log(localStorage.setItem("des", data.data.description))
-      console.log(localStorage.setItem("token", data.data.token))
-      console.log(datas)
+     // console.log(userdata)
+      //console.log(card)
+      localStorage.setItem("title", data.data.title)
+      localStorage.setItem("des", data.data.description)
+      localStorage.setItem("token", data.data.token)
+      
       datas.splice(0,datas.length)
       navigateTo('/create/')
     }
