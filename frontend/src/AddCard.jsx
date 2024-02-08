@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Draggable from 'react-draggable'
 import reactSelect from 'react-select';
 import  IconButton from '@mui/material/IconButton';
@@ -7,22 +7,59 @@ import EditIcon from '@mui/icons-material/Edit';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import { useNavigate } from'react-router-dom'
 import './components/editicon.css'
+import { toast } from 'react-toastify';
+
 function AddCard({title,description,date}) {
   const [isSelected,setSelected]=useState(false)
   const [isEnlarged, setIsEnlarged] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   const [isGlowing, setIsGlowing] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  let [edit_title,setedit_title] = useState("")
+  let [edit_description,setedit_description] = useState("")
  const navigateTo=useNavigate()
 
   const handleClick = () => {
+    setSelected(true)
+    toast.success("You have 2 seconds to edit or delete the note")
     localStorage.setItem("edit-title",title)
     localStorage.setItem("edit-description",description)
+    setedit_title(localStorage.getItem("edit-title"));
+    
+    setedit_description(localStorage.getItem("edit-description"));
+    
     setIsGlowing(true);
     setTimeout(() => {
       setIsGlowing(false);
-    }, 1500);
+      setSelected(false)
+    },4000);
   };
+
+
+  const handleClickOutside = (event) => {
+    // let a=edit_title
+    // console.log(a)
+    if (
+      !event.target.closest('.todo-container') 
+     
+    ) {
+    
+     
+      setedit_description("");
+      setedit_title("");
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  
+  // useEffect(() => {
+  //   handleClickOutside()
+  // },[handleClickOutside])
+
   const handlerefresh = () => {
     setRefresh(true);
 
@@ -52,7 +89,7 @@ function AddCard({title,description,date}) {
       
       function  handleedit(){
        
-        navigateTo('/create')
+        navigateTo('/edit')
         
       }
 
@@ -61,18 +98,18 @@ function AddCard({title,description,date}) {
   return (
       <>
       <Draggable>
-      
+     
        
-      <div style={{width:isEnlarged?800:450,height:isEnlarged?600:340,overflowWrap: 'break-word', wordWrap: 'break-word'}} onClick={handleClick} className={`todo-container bg-yellow-100 rounded-xl shadow-md overflow-auto  cursor-pointer ${
-        isGlowing ? "shadow-3xl sh shadow-yellow-300 q duration-500 ease-in-out" : ''
-      }`}
+      <div style={{width:isEnlarged?800:440,height:isEnlarged?600:340,overflowWrap: 'break-word', wordWrap: 'break-word'}} onClick={handleClick} className={`todo-container bg-yellow-100 rounded-xl shadow-md overflow-auto  cursor-pointer  ${
+        isGlowing ?  `m-5 mb-10 shadow-4xl px-5 w-60 sh shadow-yellow-300 q duration-1000 ease-in-out` : ''
+      } ${isEnlarged ? "w-1/2" : ''}`}
         >
-   
-      <div className="absolute top-5 right-6 " onClick={handledelete} >
-        
-        <IconButton aria-label="delete">
+          
+      <div className={`delete-icon absolute top-5 right-6 ${isSelected?'visible':''} `} onClick={handledelete} >
+        {isSelected &&(<IconButton aria-label="delete">
              <ClearOutlinedIcon/>
            </IconButton>
+        )}
         </div>
        
         <div className="absolute top-7">
@@ -87,10 +124,13 @@ function AddCard({title,description,date}) {
    
       <h5 className='absolute bottom-2 right-4 text-sm text-slate-400 font-light'>{date}</h5>
       
-      <div className='edit-icon absolute top-5 right-14' onClick={handleedit}>
-         <IconButton aria-label="Edit">
-             <EditIcon/>
-           </IconButton>
+      <div className={`edit-icon absolute top-5 right-14 ${isSelected?'visible':''}`} onClick={handleedit}>
+         {isSelected&&(
+           <IconButton aria-label="Edit">
+           <EditIcon/>
+         </IconButton>
+         )}
+        
         
          </div>
       </div>

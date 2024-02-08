@@ -15,13 +15,15 @@ import { components } from 'react-select'
 //import {setnotesid} from './components/Signup'
 function CreateUser() {
 
-    const [user,setuser]=useState("")
-    const [des,setdes]=useState("")
+   let [user,setuser]=useState("")
+   let [des,setdes]=useState("")
     const navigateTo=useNavigate()
     const [objectid,setobjectid]=useState(null)
     const [card,setCard]=useRecoilState(CardState)
     const [showalert,setalert]=useState(false)
-    // const bounce = cssTransition({
+    // let [edit_title,setedit_title]=useState("")
+    // let [edit_description,setedit_description]=useState("")
+    // // const bounce = cssTransition({
     //   enter: "animate__animated animate__bounceIn",
     //   exit: "animate__animated animate__bounceOut",
     // });
@@ -36,15 +38,25 @@ function CreateUser() {
       }
       
     },[])
+    // const editdes=(e)=>{
+    //   setdes(e.target.value)
+    //   setCard((prevdata)=> prevdata.description+des)
+    // }
+    // const edittitle=(e)=>{
+    //   setuser(e.target.value)
+    //   setCard((prevdata)=> prevdata.title+user)
+    // }
     useEffect(()=>{
       localStorage.setItem('title',user)
       localStorage.setItem('des',des)
+      
+
     },[user,des])
    
-
-
+     
     const editdraft=(e)=>{
       setdes(e.target.value)
+     
       setCard((prevdata)=> prevdata.description+des)
       localStorage.setItem('draft',des)
     }
@@ -54,30 +66,18 @@ function CreateUser() {
     // }
     const adduser=(e)=>{
       setuser(e.target.value)
-      setCard((prevdata)=> prevdata.description+des)
+      setCard((prevdata)=> prevdata.title+des)
       localStorage.setItem('adduser',user)
     }
-    const adddes=(e)=>{
-        setdes(e.target.value)
-    }
+   
+    
     var props = {
       title:user,
       description:des
     }
-    let edit_title=localStorage.getItem("edit-title")
-    let edit_description=localStorage.getItem("edit-description")
-    
-    //console.log(edit_title,edit_description)
-    if(edit_description||edit_title){
-      localStorage.removeItem("title")
-      localStorage.removeItem("des")
-     var props={
-        title:edit_title,
-        description:edit_description
-      }
+
      
-      console.log("hello")
-    }
+    //console.log(edit_title,edit_description)
     console.log(props);
  
     const handleimageclick=()=>{
@@ -85,24 +85,7 @@ function CreateUser() {
     }
     
   
-    const handlesavenote=async()=>{
-           await fetch("http://localhost:5001/notes",{
-          method:"POST",
-          body: JSON.stringify({
-            title:user,
-            description:des
-          }),
-          headers:{
-            "Content-type":"application/json"
-          }
-        }).then(async function(response){
-          const data = await response.json();
-          const id = data.data;
-          console.log(id)
-          setobjectid(id)
-        })
-
-    }
+   
    
     
     const updatenotes=async()=>{
@@ -170,8 +153,6 @@ function CreateUser() {
       })
 
      
-
-
     }
 
   

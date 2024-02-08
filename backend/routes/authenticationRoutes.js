@@ -16,7 +16,7 @@ router
     .route('/notes')
     .post(protect,notes)
 router
-    .route('/notes/update/')
+    .route('/notes/update/:id')
     .patch(updatedata)
 router
     .route('/notes/delete/:id')

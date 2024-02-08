@@ -192,21 +192,22 @@ exports.getallnotes=async(req,res)=>{
 }
 exports.updatedata=async(req,res)=>{ 
   //console.log((Owner.toString()))
-    let Owner
+    let object_id = req.params.id
     let token=req.headers.authorization.split(' ')[1]
     let decoded=jwt.verify(token,process.env.JWT_SECRET)
-    const Oneuser=await notesdb.findOne({owner:decoded.id})
-   
-    const filter = Oneuser._id
-    const update = {
+    await notesdb.findByIdAndUpdate(object_id,{
+       
         title:req.body.title,
         description : req.body.description
-    }
-    
-    await notesdb.findOneAndUpdate(filter,update,{
-        new: true,
-        validators: true
+        
     })
+   
+   
+    
+    // await notesdb.findOneAndUpdate(filter,update,{
+    //     new: true,
+    //     validators: true
+    //})
     
     res.status(200).json({
         msg: "updated"

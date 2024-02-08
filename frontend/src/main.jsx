@@ -8,6 +8,7 @@ import Auth from './components/Auth.jsx'
 import Signup from './components/Signup.jsx'
 import { RecoilRoot } from 'recoil'
 import AllCards from './AllCards.jsx'
+import EditUser from './EditUser.jsx'
 const router=createBrowserRouter([
   {
     path:'/',
@@ -25,7 +26,12 @@ const router=createBrowserRouter([
   {
     path:'/create/',
     element:<CreateUser/>
+  },
+  {
+    path:'/edit/',
+    element:<EditUser/>
   }
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

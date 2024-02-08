@@ -8,18 +8,18 @@
   .search__input {
     font-family: inherit;
     font-size: inherit;
-    background-color: rgba(128, 128, 128, 0.17);
+    background-color: rgba(128, 128, 128, 0.619);
     border: none;
-    color: #646464;
+    color: black;
     padding: 0.7rem 1rem;
     border-radius: 30px;
-    width: 12em;
+    width: 40em;
     transition: all ease-in-out .5s;
     margin-right: -2rem;
   }
   
   .search__input:hover, .search__input:focus {
-    box-shadow: 0 0 1em #00000013;
+    box-shadow: 0 0 4em rgb(128, 128, 128)
   }
   
   .search__input:focus {
@@ -37,7 +37,7 @@
   }
   
   .search__button {
-    border: none;
+    border:none;
     background-color: rgba(128, 128, 128, 0);
     margin-top: .1em;
   }
