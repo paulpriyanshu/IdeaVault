@@ -8,7 +8,7 @@
   .bubble {
     width: 100px;
     height: 100px;
-    background-color:lightgray; /* Bubble color */
+    background-color:grey; /* Bubble color */
     border-radius: 50%;
     margin: 0 5px;
     animation: bubbleAnimation 0.8s ease-in-out infinite alternate;

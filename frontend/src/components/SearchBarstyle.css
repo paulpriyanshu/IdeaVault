@@ -1,8 +1,7 @@
 .search {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
+    position: fixed;  
+    
+    z-index: 999;
   }
   
   .search__input {
@@ -29,7 +28,7 @@
   
   .search__input::-webkit-input-placeholder {
     font-weight: 500;
-    color: #cccccc;
+    color: black;
   }
   
   .search__input:focus + .search__button {

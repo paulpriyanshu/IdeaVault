@@ -78,10 +78,10 @@ const [isDropdownOpen, setIsDropdownOpen] = useState(false);
      
     
     return (
-    <div className='min-h-screen w-full p-4 bg-gray-300 flex flex-col items-center'> 
-    <span className="p-10"> 
+    <div className='min-h-screen w-full p-4 bg-gray-300 flex flex-col items-center justify-center'> 
+    <div className="p-10 flex justify-center"> 
     <div className="search">
-    <input type="text"  onKeyDown={handlequery} className="search__input" placeholder="Type your text" value={query} onChange={handlequery} size={{width:50}}/>
+    <input type="text"  onKeyDown={handlequery} className="search__input" placeholder="Search Notes" value={query} onChange={handlequery} size={{width:50}}/>
     <button className="search__button">
         <svg className="search__icon" aria-hidden="true" viewBox="0 0 24 24"/>
             <g>
@@ -91,7 +91,7 @@ const [isDropdownOpen, setIsDropdownOpen] = useState(false);
         </button>
      
     </div>
-    </span>
+    </div>
     <div>{loading?<><BubbleLoader/></>:alldata.length===0?<div className="flex justify-center text-3xl"><h1>Empty</h1></div>: <Results data={alldata}/> }</div>
      
   
