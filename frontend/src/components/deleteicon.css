@@ -1,9 +1,0 @@
-.delete-icon { 
-    opacity: 0;
-    transition: opacity 0.5s ease;
-
-}
-
-.delete-icon.visible {
-    opacity: 1;
-}
