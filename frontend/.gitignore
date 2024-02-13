@@ -8,7 +8,11 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+<<<<<<< HEAD
 *.env
+=======
+config.env
+>>>>>>> parent of 9accabd (Delete frontend directory)
 dist
 dist-ssr
 *.local

@@ -1,0 +1,9 @@
+.edit-icon {
+  
+  opacity: 0;
+  transition: opacity 0.5s ease
+}
+
+.edit-icon.visible {
+  opacity: 1;
+}
