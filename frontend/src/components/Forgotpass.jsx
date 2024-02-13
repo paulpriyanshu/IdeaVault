@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css"
 
  function Forgotpass() {
     const [email, setemail]=useState("")
+    const [count,setcount]=useState(0)
+    const [sent,setsent]=useState(false)
   const [reply,setreply] = useState("")
   const navigateTo=useNavigate()
     const sendlink=async() =>{
@@ -24,16 +26,17 @@ import "react-toastify/dist/ReactToastify.css"
       }).then(async(response)=>{
         const data=await response.json();
         console.log(data)
-         toast.success("Email sent successfully")
-         
-
-        
-      //setreply(data)
-
+        toast.success("Email sent successfully")
       })
+     
+        
+
+      
+
     }catch(err){
       toast.error("Error sending email")
     }
+    
     
   }
   return (
@@ -66,6 +69,10 @@ import "react-toastify/dist/ReactToastify.css"
         </p>
     </h2>
     <span className="flex justify-center">
+      {/* <div>
+        <p>Sending In:{count}</p>
+      </div>
+      <br></br> */}
         <button  onClick={sendlink} className="m-5 mt-10 text-slate-600 font font-bold border border-grey-100 w-80 py-3 bg-green-300  rounded-3xl transition duration-500 hover:bg-green-400 transform hover:translate-y-[-10px]">
             Send Link
         </button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useFetcher, useNavigate } from "react-router-dom";
+import { Link, Navigate, useFetcher, useNavigate, useParams } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
 import Card from "../Card";
 import { ToastContainer,toast,cssTransition } from 'react-toastify'
@@ -7,9 +7,10 @@ import "react-toastify/dist/ReactToastify.css"
 
 
 function Resetpass() {
+    const { token } = useParams();
     const [Newpass, Setnewpass]=useState("");
     const [confirmpass, Setconfirmpass]=useState("");
-
+    console.log(token)
     const newpass=(e)=>{
         Setnewpass(e.target.value);
         
@@ -22,11 +23,11 @@ function Resetpass() {
         if(Newpass!==confirmpass){
             toast.error("Passwords do not match")
         }else{
-        const newpw=await fetch('http://localhost:5001/api/v1/auth/login/resetpassword:token',{
+        const newpw=await fetch(`http://localhost:5001/api/v1/auth/login/resetpassword/${token}`,{
             method:'PATCH',
             body:JSON.stringify({
                 password:Newpass,
-                confirmpassword:confirmpass
+                Confpassword:confirmpass
             }),
             headers: {
                 "Content-type":"application/json",
@@ -38,6 +39,9 @@ function Resetpass() {
             toast.success("Password changed successfully")
         })
         }
+        useEffect(()=>{
+            localStorage.setItem("passwordtoken",req.params.token)
+        })
     }
   return (
     
