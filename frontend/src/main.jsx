@@ -9,6 +9,8 @@ import Signup from './components/Signup.jsx'
 import { RecoilRoot } from 'recoil'
 import AllCards from './AllCards.jsx'
 import EditUser from './EditUser.jsx'
+import  Forgotpass  from './components/Forgotpass.jsx'
+import Resetpass from './components/Resetpass.jsx'
 const router=createBrowserRouter([
   {
     path:'/',
@@ -22,6 +24,14 @@ const router=createBrowserRouter([
   {
     path:'/signup',
     element:<Signup/>
+  },
+  {
+    path:'/forgotpassword',
+    element:<Forgotpass/>
+  },
+  {
+    path:'/resetpassword:token',
+    element:<Resetpass/>
   },
   {
     path:'/create/',

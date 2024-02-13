@@ -160,7 +160,7 @@ function CreateUser() {
     <>
     
     <div className="flex justify-between">
-    <div className='flex flex-col min-h-screen w-1/2 p-4 bg-gray-200'>
+    <div className='flex flex-col min-h-screen w-1/2 p-4 bg-gray-300'>
     <div className="min-h-screen">
     <div className="mb-10 mt-5">
     <button style={{width:150,height:50, margin:10,marginLeft:50}} onClick={handlelogout} className='border border-slate-500 rounded-full hover:bg-slate-300'>Log out</button>

@@ -1,5 +1,5 @@
 const express=require('express')
-const { login,signup, updatedata,notes, getallnotes, protect,deletenotes } = require('../controllers/Authentication')
+const { login,signup, updatedata,notes, getallnotes, protect,deletenotes, forgetpassword, resetpassword } = require('../controllers/Authentication')
 const router=express.Router()
 
 router 
@@ -8,7 +8,8 @@ router
 router
     .route('/login')
     .post(login)
-
+router.post('/login/forgetpassword',forgetpassword)
+router.patch('/login/resetpassword/:token',resetpassword)
 router
     .route('/allnotes')
     .get(protect,getallnotes)

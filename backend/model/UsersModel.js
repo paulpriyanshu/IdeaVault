@@ -3,6 +3,8 @@ const validator=require('validator')
 const bcrypt=require('bcrypt')
 const notesdb=require('./noteModel')
 const { array } = require('zod')
+const crypto=require('crypto')
+
 
 const userschema =new  mongoose.Schema({
     Name:{
@@ -29,7 +31,9 @@ const userschema =new  mongoose.Schema({
             },
             message:"passwords are not same"
         }
-   }
+   },
+   passwordResetToken : String,
+   passwordResetExpires: Date,
   
     
 })
@@ -47,7 +51,15 @@ userschema.pre('save', async function(next){
 
  }
 
+userschema.methods.createPasswordResetToken= async function(){ 
+    const resetToken= crypto.randomBytes(32).toString('hex')
+    this.passwordResetToken=crypto.createHash('sha256').update(resetToken).digest('hex')
+    console.log({resetToken},this.passwordResetToken)
+    this.passwordResetExpires=Date.now()+10*60*1000;
 
+    return resetToken
+
+}
 //  userschema.pre('save',async(next)=>{
 //     const elementspromises=this.elements.map(async id=>await notesdb.findById(id))
 //     this.elements= await Promise.all(elementspromises)

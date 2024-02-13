@@ -17,7 +17,7 @@ function Card({props}) {
     <>
     <Draggable>
    
-    <div style={{width:650,height:400,overflowWrap: 'break-word', wordWrap: 'break-word'}} className=" todo-container bg-yellow-100 rounded-xl shadow-md overflow-auto cursor-auto">
+    <div style={{width:550,height:400,overflowWrap: 'break-word', wordWrap: 'break-word'}} className=" todo-container bg-yellow-100 rounded-xl shadow-md overflow-auto cursor-auto">
     <div><button  class="absolute top-3  text-3xl right-4 px-1  text-slate-300 rounded-full hover:text-slate-400 focus:outline-none 
      " onClick={AddCard}>
     +
