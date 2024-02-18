@@ -4,7 +4,7 @@ const morgan=require('morgan')
 const app= express()
 const dotenv=require('dotenv')
 dotenv.config({path:"./config.env"})
-const port=5001;
+const port=process.env.PORT || 5001;
 const mongoose=require('mongoose')
 const {notesdb}=require('./model/noteModel')
 const Users=require('./model/UsersModel')
@@ -54,7 +54,7 @@ app.use(mongoSanitize())
 app.use(xss())
 app.use(hpp())
 app.use(compression())
-mongoose.connect('mongodb+srv://priyanshupaul003:oAsGAjErBlExDHoa@cluster0.42q18en.mongodb.net/Editor?retryWrites=true&w=majority',{
+mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
