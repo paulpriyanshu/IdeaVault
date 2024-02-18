@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { TEInput,TERipple } from 'tw-elements-react'
 import {useNavigate} from 'react-router-dom'
 import { useRecoilState } from 'recoil'
+import Cookies from 'universal-cookie'
+
 //import { userState } from './UserState'
 //import {setobjectid} from '../CreateUser'
 function Signup() {
@@ -10,7 +12,7 @@ function Signup() {
   const [name,setname]=useState("")
   const [Confpassword,setConfpassword]=useState("")
   const [notesid,setnotesid]=useState("")
-  
+  const cookie=new Cookies()
     const navigateTo=useNavigate()
 
   //   let signup={
@@ -42,7 +44,7 @@ function Signup() {
          
           const data = await response.json();
           console.log(data)
-          localStorage.setItem("token", data.token)
+          cookie.set("token", data.token)
           const id = data.id;
           console.log(id)
           

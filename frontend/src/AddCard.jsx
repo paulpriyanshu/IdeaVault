@@ -8,6 +8,8 @@ import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import { useNavigate } from'react-router-dom'
 import './components/editicon.css'
 import { toast } from 'react-toastify';
+import Cookies from 'universal-cookie';
+
 
 function AddCard({title,description,date}) {
   const [isSelected,setSelected]=useState(false)
@@ -18,7 +20,7 @@ function AddCard({title,description,date}) {
   let [edit_title,setedit_title] = useState("")
   let [edit_description,setedit_description] = useState("")
  const navigateTo=useNavigate()
-
+  const cookie=new Cookies()
   const handleClick = () => {
     setSelected(true)
     toast.success("You have 2 seconds to edit or delete the note")
@@ -76,7 +78,7 @@ function AddCard({title,description,date}) {
       body: JSON.stringify({object_id}),
       headers: {
         "Content-type":"application/json",
-        "Authorization": "Bearer " + localStorage.getItem("token")
+        "Authorization": "Bearer " + cookie.get("token")
       }
   }).then(()=>{
           handlerefresh()
@@ -100,7 +102,7 @@ function AddCard({title,description,date}) {
       <Draggable>
      
        
-      <div style={{width:isEnlarged?800:440,height:isEnlarged?600:340,overflowWrap: 'break-word', wordWrap: 'break-word'}} onClick={handleClick} className={`todo-container bg-yellow-100 rounded-xl shadow-md overflow-auto  cursor-pointer  ${
+      <div style={{width:isEnlarged?600:380,height:isEnlarged?400:320,overflowWrap: 'break-word', wordWrap: 'break-word'}} onClick={handleClick} className={`todo-container bg-yellow-100 rounded-xl shadow-md overflow-auto  cursor-pointer  ${
         isGlowing ?  `m-5 mb-10 shadow-4xl px-5 w-60 sh shadow-yellow-300 q duration-1000 ease-in-out` : ''
       } ${isEnlarged ? "w-1/2" : ''}`}
         >

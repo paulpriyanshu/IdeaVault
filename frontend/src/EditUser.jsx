@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import Notify from './components/Notify'
 import AllCards from './AllCards'
 import { components } from 'react-select'
+import Cookies from 'universal-cookie';
 //import {setnotesid} from './components/Signup'
 function EditUser() {
 
@@ -24,6 +25,7 @@ function EditUser() {
     const [temp,settemp]=useState("")
     const [edit_title,setedit_title]=useState("")
     const [edit_description,setedit_description]=useState("")
+    const cookie=new Cookies()
     useEffect(()=>{
        
         setedit_title(localStorage.getItem("edit-title"))
@@ -54,6 +56,8 @@ function EditUser() {
 
     const updatenotes=async()=>{
       let object_id = localStorage.getItem('object_id')
+      console.log(object_id)
+      console.log(cookie.get('token'))
         await fetch(`http://localhost:5001/api/v1/auth/notes/update/${object_id}`,{
           method:"PATCH",
           body: JSON.stringify({
@@ -62,7 +66,7 @@ function EditUser() {
           }),
           headers:{
             "Content-type":"application/json",
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            "Authorization": "Bearer " + cookie.get("token")
           
           }
         }) 

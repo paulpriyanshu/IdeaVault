@@ -6,7 +6,7 @@ import { ToastContainer,toast,cssTransition } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css"
 import { useRecoilState } from "recoil";
 import { CardState } from "./CardState";
-
+import Cookies from "universal-cookie";
 let datas=[]
 
 
@@ -18,7 +18,9 @@ export default function Auth() {
   const navigateTo=useNavigate()
   const [card,setCard]=useRecoilState(CardState)
   const[mount,setmount]=useState(false)
-  
+  const [token,setToken]=useState(null) 
+
+  const cookies=new Cookies();
   
   localStorage.setItem('email',email);
   localStorage.setItem('password',password);
@@ -40,9 +42,11 @@ export default function Auth() {
   //   }
   // })
   var handlelogin=async(e)=>{
- 
-  let token=localStorage.getItem("token")
-  console.log(token)
+    let cookies=new Cookies()
+  
+    //console.log(token)
+  // let token=localStorage.getItem("token")
+  // console.log(token)
   try{
   const response=await fetch("http://localhost:5001/api/v1/auth/login",{
     method:"POST",
@@ -54,13 +58,19 @@ export default function Auth() {
       "Content-type":"application/json",
       
     }
-})
+    })
+ //.then(async(response) => {
+//   // const tokencookie=await response.headers
+//   //  console.log(tokencookie)
+// })
 if (!response.ok) {
   const errorData = await response.json();
   toast.error(errorData.error); // Show toast error
 } else {
     toast.success("logged in")
   const data=await response.json()
+  // const tokenval= response.headers.get("Set-Cookie")
+  // console.log(tokenval)
   //console.log(data)
   //console.log(data.error)
  
@@ -73,7 +83,16 @@ if (!response.ok) {
       //console.log(card)
       localStorage.setItem("title", data.data.title)
       localStorage.setItem("des", data.data.description)
-      localStorage.setItem("token", data.data.token)
+      cookies.set("token", data.data.token)
+      
+      // let token=cookies.get('token')  
+      // const cookivalue=document.cookie.split(';').find(row=>row.startsWith("jwt="))
+      // if(cookivalue){
+      //   const token=cookivalue.split('=')[1];
+      //   setToken(token)
+      //   console.log(token)
+      // }
+     
       
       datas.splice(0,datas.length)
       navigateTo('/create/')

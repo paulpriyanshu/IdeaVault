@@ -6,7 +6,9 @@ import  './components/SearchBarstyle.css'
 import BubbleLoader from './components/BubbleLoader'
 import { ToastContainer,toast,cssTransition } from 'react-toastify'
 
+
 import AddCard from './AddCard'
+import Cookies from 'universal-cookie'
 //import SearchBar from './components/SearchBar'
 //import { HandymanOutlined } from '@mui/icons-material'
 
@@ -23,13 +25,14 @@ const [query,setquery]=useState("")
 const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
 
-
+const cookies=new Cookies();
 
    const allcarddata=async()=>{
   //let token=localStorage.getItem('token')
+  console.log(cookies.get('token'));
       let notes=await fetch('http://localhost:5001/api/v1/auth/allnotes',{
         headers: {
-          "Authorization": "Bearer " + localStorage.getItem("token")
+          "Authorization": "Bearer " + cookies.get("token")
       }
       }).then(async(notes)=>{
       const data=await notes.json()

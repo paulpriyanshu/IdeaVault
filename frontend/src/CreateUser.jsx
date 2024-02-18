@@ -12,15 +12,20 @@ import { useNavigate } from 'react-router-dom'
 import Notify from './components/Notify'
 import AllCards from './AllCards'
 import { components } from 'react-select'
+import Cookies from 'universal-cookie';
+import { Cookie } from '@mui/icons-material';
 //import {setnotesid} from './components/Signup'
 function CreateUser() {
 
    let [user,setuser]=useState("")
    let [des,setdes]=useState("")
+   let [id,setid]=useState("")
     const navigateTo=useNavigate()
     const [objectid,setobjectid]=useState(null)
     const [card,setCard]=useRecoilState(CardState)
     const [showalert,setalert]=useState(false)
+    
+    const cookie=new Cookies()
     // let [edit_title,setedit_title]=useState("")
     // let [edit_description,setedit_description]=useState("")
     // // const bounce = cssTransition({
@@ -47,12 +52,22 @@ function CreateUser() {
     //   setCard((prevdata)=> prevdata.title+user)
     // }
     useEffect(()=>{
+      
       localStorage.setItem('title',user)
       localStorage.setItem('des',des)
       
 
     },[user,des])
-   
+    
+    
+    const addid=()=>{
+      setCard((prevdata)=> console.log(prevdata.description))
+
+
+    }
+    // useEffect(()=>{
+    //   addid()
+    // })
      
     const editdraft=(e)=>{
       setdes(e.target.value)
@@ -66,7 +81,8 @@ function CreateUser() {
     // }
     const adduser=(e)=>{
       setuser(e.target.value)
-      setCard((prevdata)=> prevdata.title+des)
+      
+      setCard((prevdata)=> prevdata.title+user)
       localStorage.setItem('adduser',user)
     }
    
@@ -78,7 +94,7 @@ function CreateUser() {
 
      
     //console.log(edit_title,edit_description)
-    console.log(props);
+    //console.log(props);
  
     const handleimageclick=()=>{
       window.open('https://github.com/paulpriyanshu','_blank')
@@ -89,7 +105,10 @@ function CreateUser() {
    
     
     const updatenotes=async()=>{
-      await fetch(`http://localhost:5001/api/v1/auth/notes/update/`,{
+      
+      let object_id = localStorage.getItem('object_id')
+      try{
+      await fetch(`http://localhost:5001/api/v1/auth/notes/update/${object_id}`,{
         method:"PATCH",
         body: JSON.stringify({
           title:user,
@@ -97,7 +116,7 @@ function CreateUser() {
         }),
         headers:{
           "Content-type":"application/json",
-          "Authorization": "Bearer " + localStorage.getItem("token")
+          "Authorization": "Bearer " + cookie.get("token")
         
         }
       }) 
@@ -108,7 +127,12 @@ function CreateUser() {
         toast.success("Note Updated!",{
           
         });
+      
       })
+    }catch(e) {
+      toast.error("Error occured try Go to all notes then try editing again")
+    }
+
     }
     const getnotes=async()=>{
           const response=await fetch(`http://localhost:5001/users/`)
@@ -128,6 +152,7 @@ function CreateUser() {
        localStorage.removeItem('des')
        localStorage.removeItem('edit-title')
        localStorage.removeItem('edit-description')
+       cookie.remove('token')
       
 
       navigateTo('/')
@@ -141,7 +166,7 @@ function CreateUser() {
         }),
         headers:{
           "Content-type":"application/json",
-          "Authorization": "Bearer " + localStorage.getItem("token")
+          "Authorization": "Bearer " + cookie.get("token")
         
         }
       }).then(async(res)=>{
@@ -163,13 +188,13 @@ function CreateUser() {
     <div className='flex flex-col min-h-screen w-1/2 p-4 bg-gray-300'>
     <div className="min-h-screen">
     <div className="mb-10 mt-5">
-    <button style={{width:150,height:50, margin:10,marginLeft:50}} onClick={handlelogout} className='border border-slate-500 rounded-full hover:bg-slate-300'>Log out</button>
-      <button style={{width:150,height:50,margin:10}} onClick={getallnotes} className='border border-slate-500 rounded-full hover:bg-slate-300'>Allnotes</button>
-      <button style={{width:150,height:50,margin:10}} onClick={newnote} className='border border-slate-500 rounded-full hover:bg-slate-300'>New note</button>
-      <span>
+    <button style={{width:150,height:50, margin:30,marginLeft:50}} onClick={handlelogout} className='border border-slate-400 rounded-full   hover:bg-slate-300 transition-transform transform duration-300 hover:scale-125'>Log out</button>
+      <button style={{width:150,height:50,margin:30}} onClick={getallnotes} className='border border-slate-400 rounded-full hover:bg-slate-300 transition-transform transform duration-300 hover:scale-125'>Allnotes</button>
+      <button style={{width:150,height:50,margin:30}} onClick={newnote} className='border border-slate-400 rounded-full hover:bg-slate-300 transition-transform transform duration-300 hover:scale-125'>New note</button>
+      {/* <span>
    
    <button style={{width:150,height:50,margin:10}} className='border border-slate-500 rounded-full hover:bg-slate-300' onClick={updatenotes}>Save</button>
-   </span>
+   </span> */}
       <span><ToastContainer /></span>
    
       </div>

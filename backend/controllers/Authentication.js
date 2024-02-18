@@ -14,6 +14,7 @@ let Owner,Token
 const signintoken=(id)=>{
     return jwt.sign({id},process.env.JWT_SECRET,{
     expiresIn: process.env.JWT_EXPIRES_IN
+
 })
 }
 
@@ -43,8 +44,8 @@ exports.protect= async(req,res,next)=>{
     //----------checkin wether the user exists or not --------------------------
        
     const decoded=await jwt.verify(token,process.env.JWT_SECRET)
-        console.log(decoded)
-        console.log(decoded.id)
+        //console.log(decoded)
+       // console.log(decoded.id)
         const currentuser= await Users.findById(decoded.id)
          if(!currentuser){
             res.status(401).json({
@@ -80,8 +81,20 @@ exports.signup=async(req,res)=>{
     
     //console.log(noteids[noteids.length-1])
     let token=signintoken(newUser._id)
+   
+    const sendCookie={
+        expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES_IN*24*60*60*1000),
+        
+        httpOnly:true
+    }
+    if(process.env.NODE_ENV === 'production'){
+        sendCookie.secure = true;
+    }
+    res.cookie('jwt', token,sendCookie)
+
+
     let refid=newUser._id
-    console.log(refid)
+    //console.log(refid)
     const newnotes =  await notesdb.create({
         title:"Add Title",
         description:"Write Something...",
@@ -123,6 +136,15 @@ exports.login=catchAsync(async(req,res,next)=>{
 
     // })
     var token=signintoken(loggedin._id)
+    const sendCookie={
+        expires: new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES_IN*24*60*60*1000),
+        
+        httpOnly:true
+    }
+    if(process.env.NODE_ENV === 'production'){
+        sendCookie.secure = true;
+    }
+    res.cookie('jwt',token,sendCookie)
 
         let owner=loggedin._id  
         
@@ -146,7 +168,7 @@ exports.login=catchAsync(async(req,res,next)=>{
     }
     Owner=owner
     Token=token
-    console.log(Owner)
+    //console.log(Owner)
       } else {
         res.status(400).json(
             { 
@@ -166,7 +188,7 @@ exports.notes=async(req,res)=>{
     // let Datenow=`${currentdate.getDate()},"/",${currentdate.getMonth()+1},"/",${currentdate.getFullYear()}`
     
     let token=req.headers.authorization.split(' ')[1]
-    console.log(token)
+    //console.log(token)
     const decoded=jwt.verify(token,process.env.JWT_SECRET)
     const newnotes =  await notesdb.create({
         title:req.body.title,
@@ -249,13 +271,13 @@ exports.forgetpassword=async(req,res,next)=>{
     
     const resetToken= await user.createPasswordResetToken()
 await user.save({validateBeforeSave:false})
-        console.log(resetToken)
+      //  console.log(resetToken)
 
     const resetUrl=`${req.protocol}://localhost:5173/resetpassword/${resetToken}`
-    console.log(resetUrl)
+    //console.log(resetUrl)
     
     const message =`Forget your  password ?\n Reset your password by clicking here : ${resetUrl} `
-    console.log(user.email)
+   // console.log(user.email)
     try{
         await sendEmail({
         email :user.email,
