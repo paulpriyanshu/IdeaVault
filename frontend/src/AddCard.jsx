@@ -102,7 +102,7 @@ function AddCard({title,description,date}) {
       <Draggable>
      
        
-      <div style={{width:isEnlarged?600:380,height:isEnlarged?400:320,overflowWrap: 'break-word', wordWrap: 'break-word'}} onClick={handleClick} className={`todo-container bg-yellow-100 rounded-xl shadow-md overflow-auto  cursor-pointer  ${
+      <div style={{width:isEnlarged?600:350,height:isEnlarged?400:320,overflowWrap: 'break-word', wordWrap: 'break-word'}} onClick={handleClick} className={`todo-container bg-yellow-100 rounded-xl shadow-md overflow-auto  cursor-pointer  ${
         isGlowing ?  `m-5 mb-10 shadow-4xl px-5 w-60 sh shadow-yellow-300 q duration-1000 ease-in-out` : ''
       } ${isEnlarged ? "w-1/2" : ''}`}
         >
@@ -115,7 +115,7 @@ function AddCard({title,description,date}) {
         </div>
        
         <div className="absolute top-7">
-    <h1 className='px-10 py-5 text-3xl text-black-400 font-semibold'>{title}</h1>
+    <h1 className='px-10 py-1 text-3xl text-black-400 font-semibold'>{title}</h1>
     <h2 className='px-10 text-black-900 text-lg max-w-400  whitespace-pre-wrap' style={{overflowWrap: 'break-word', wordWrap: 'break-word' }}>
           <p className="px-2 py-1">
             {description}

@@ -190,7 +190,7 @@ function CreateUser() {
     <div className="mb-10 mt-5">
     <button style={{width:150,height:50, margin:30,marginLeft:50}} onClick={handlelogout} className='border border-slate-400 rounded-full   hover:bg-slate-300 transition-transform transform duration-300 hover:scale-125'>Log out</button>
       <button style={{width:150,height:50,margin:30}} onClick={getallnotes} className='border border-slate-400 rounded-full hover:bg-slate-300 transition-transform transform duration-300 hover:scale-125'>Allnotes</button>
-      <button style={{width:150,height:50,margin:30}} onClick={newnote} className='border border-slate-400 rounded-full hover:bg-slate-300 transition-transform transform duration-300 hover:scale-125'>New note</button>
+      <button style={{width:150,height:50,margin:30}} onClick={newnote} className='border border-slate-400 rounded-full hover:bg-slate-300 transition-transform transform duration-300 hover:scale-125'>Save</button>
       {/* <span>
    
    <button style={{width:150,height:50,margin:10}} className='border border-slate-500 rounded-full hover:bg-slate-300' onClick={updatenotes}>Save</button>
